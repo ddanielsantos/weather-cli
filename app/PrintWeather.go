@@ -13,7 +13,7 @@ import (
 var API_KEY = getEnv("API_KEY")
 
 func getEnv(key string) string {
-	err := dotenv.Load(".env")
+	err := dotenv.Load("../.env")
 	HandleError(err)
 
 	return os.Getenv(key)
@@ -37,7 +37,7 @@ func getRequest(url string) ([]byte, error) {
 	return bytes, e
 }
 
-func cityCurrentWeather(cityName string) (CurrentWeather, error) {
+func CityCurrentWeather(cityName string) (CurrentWeather, error) {
 	ForecastSearchURL := "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appId=" + API_KEY
 
 	resp, e := getRequest(ForecastSearchURL)
@@ -57,7 +57,7 @@ func cityCurrentWeather(cityName string) (CurrentWeather, error) {
 }
 
 func PrintWeather(city string) {
-	w, err := cityCurrentWeather(city)
+	w, err := CityCurrentWeather(city)
 	HandleError(err)
 
 	fmt.Println(w)
