@@ -1,13 +1,29 @@
 # :cloud: Weather CLI
 
-Simple CLI made with Go, it interacts with the [OpenWeather API](https://openweathermap.org/)
+Simple CLI made with Go, it interacts with the OpenWeather's [Current API](https://openweathermap.org/current)
+
+## :gear: Running locally:
+
+- Download
+```bash
+git clone https://github.com/ddanielsantos/weather-cli
+cd weather-cli
+```
+- Setup your OpenWeather API Key
+
+You can get more information about the API Key [here](https://openweathermap.org/appid), after you get one, you can use ``.env.example`` as a model to finish the configuration
+
+- Run
+```bash
+go build .
+./weather-cli -h
+```
 
 ## :pencil: TODO:
 
 - [ ] implement commands: 
   - [X] now
-  - [ ] forecast (``x`` days)
-- [ ] fix a problem in the cities with accent in the name
+  - [ ] forecast (using OpenWeather's [Forecast16 API](https://openweathermap.org/forecast16))
 
 ## :thinking: Knowledge obtained:
 
