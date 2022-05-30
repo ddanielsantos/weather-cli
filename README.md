@@ -7,6 +7,7 @@ Simple CLI made with Go, it interacts with the [OpenWeather API](https://openwea
 - [ ] implement commands: 
   - [X] now
   - [ ] forecast (``x`` days)
+- [ ] fix a problem in the cities with accent in the name
 
 ## :thinking: Knowledge obtained:
 
