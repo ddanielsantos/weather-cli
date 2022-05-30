@@ -1,4 +1,4 @@
-package main
+package app
 
 type Coordinates struct {
 	Latitude  float64 `json:"lon"`

@@ -1,4 +1,4 @@
-package main
+package app
 
 func HandleError(err error) {
 	if err != nil {
