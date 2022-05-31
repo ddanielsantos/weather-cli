@@ -15,7 +15,8 @@ import (
 var API_KEY = getEnv("API_KEY")
 
 func getEnv(key string) string {
-	err := dotenv.Load("../.env")
+	path, _ := os.Getwd()
+	err := dotenv.Load(strings.Split(path, "weather-cli")[0] + "weather-cli/.env")
 	HandleError(err)
 
 	return os.Getenv(key)
@@ -90,6 +91,7 @@ func PrintWeather(city string) {
 	fmt.Printf("\n┏━━━━━━━┫ Current weather in %s - %s ┣━━━━━━━┓\n", city, w.Info.Country)
 
 	// the width of this line will be = boxWith - 10 (harcoded string) + 10 (date lenght)
+	fmt.Printf("┃%s┃\n", RepeatChar(" ", boxWidth-2))
 	fmt.Printf("┃ Date: %s%s ┃\n", date, RepeatChar(" ", boxWidth-10-10))
 
 	latLenght := len(fmt.Sprintf("%.2f", w.Coordinates.Latitude))
@@ -108,6 +110,6 @@ func PrintWeather(city string) {
 	windLenght := len(fmt.Sprintf("%.2f", w.Wind.Speed))
 	degreesLenght := len(fmt.Sprintf("%.2f", w.Wind.Deg))
 	gustLenght := len(fmt.Sprintf("%.2f", w.Wind.Gust))
-	fmt.Printf("┃ Wind speed %.2fm/s%s ┃\n┃ Deg %.2f%s ┃\n┃ Gust %.2fm/s%s ┃\n", w.Wind.Speed, RepeatChar(" ", boxWidth-18-windLenght), w.Wind.Deg, RepeatChar(" ", boxWidth-8-degreesLenght), w.Wind.Gust, RepeatChar(" ", boxWidth-12-gustLenght))
+	fmt.Printf("┃ Wind speed: %.2f m/s%s ┃\n┃ Deg: %.2f%s ┃\n┃ Gust: %.2f m/s%s ┃\n", w.Wind.Speed, RepeatChar(" ", boxWidth-20-windLenght), w.Wind.Deg, RepeatChar(" ", boxWidth-9-degreesLenght), w.Wind.Gust, RepeatChar(" ", boxWidth-14-gustLenght))
 	fmt.Printf("┗%s┛\n\n", RepeatChar("━", boxWidth-2))
 }
