@@ -16,7 +16,7 @@ You can get more information about the API Key [here](https://openweathermap.org
 - Run
 ```bash
 go build .
-./weather-cli -h
+./weather-cli now --city <city name here>
 ```
 
 ## :pencil: TODO:
