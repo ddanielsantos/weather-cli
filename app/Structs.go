@@ -33,7 +33,8 @@ type CurrentWeather struct {
 	Forecast    Forecast    `json:"main"`
 	Wind        Wind        `json:"wind"`
 	CityName    string      `json:"name"`
+	Date        int         `json:"dt"`
 	Info        struct {
-		country string
+		Country string `json:"country"`
 	} `json:"sys"`
 }

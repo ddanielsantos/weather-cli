@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
+	"time"
 
 	dotenv "github.com/joho/godotenv"
 )
@@ -37,6 +39,14 @@ func getRequest(url string) ([]byte, error) {
 	return bytes, e
 }
 
+type Options struct {
+	daysFromNowOn int
+}
+
+func CityForecast(cityName string, options *Options) ([]Forecast, error) {
+	return []Forecast{}, nil
+}
+
 func CityCurrentWeather(cityName string) (CurrentWeather, error) {
 	ForecastSearchURL := "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appId=" + API_KEY
 
@@ -56,9 +66,48 @@ func CityCurrentWeather(cityName string) (CurrentWeather, error) {
 	return currentWeather, e
 }
 
+func UnixToDate(unixTime int) string {
+	return time.Unix(int64(unixTime), 0).Format("2006-01-02")
+}
+
+func RepeatChar(char string, howManyTimes int) string {
+	return strings.Repeat(char, howManyTimes)
+}
+
 func PrintWeather(city string) {
 	w, err := CityCurrentWeather(city)
 	HandleError(err)
 
-	fmt.Println(w)
+	date := UnixToDate(w.Date)
+
+	// 42 minimum width
+	cityNameLength := len(w.CityName)
+	countryAbbrLength := 2
+	firstLineBaseLenght := 42
+	boxWidth := firstLineBaseLenght + cityNameLength + countryAbbrLength
+
+	// the width of this line will be = boxWidth
+	fmt.Printf("\n┏━━━━━━━┫ Current weather in %s - %s ┣━━━━━━━┓\n", city, w.Info.Country)
+
+	// the width of this line will be = boxWith - 10 (harcoded string) + 10 (date lenght)
+	fmt.Printf("┃ Date: %s%s ┃\n", date, RepeatChar(" ", boxWidth-10-10))
+
+	latLenght := len(fmt.Sprintf("%.2f", w.Coordinates.Latitude))
+	lonLenght := len(fmt.Sprintf("%.2f", w.Coordinates.Longitude))
+	fmt.Printf("┃ Lat: %.2fº%s ┃\n┃ Lon: %.2fº%s ┃\n", w.Coordinates.Latitude, RepeatChar(" ", boxWidth-10-latLenght), w.Coordinates.Longitude, RepeatChar(" ", boxWidth-10-lonLenght))
+
+	feelsLikeLenght := len(fmt.Sprintf("%.2f", w.Forecast.FeelsLike))
+	minTemperatureLength := len(fmt.Sprintf("%.2f", w.Forecast.Min))
+	maxTemperatureLength := len(fmt.Sprintf("%.2f", w.Forecast.Max))
+	fmt.Printf("┃ Feels like: %.2f Kº%s ┃\n┃ Min: %.2f Kº%s ┃\n┃ Max: %.2f Kº%s ┃\n", w.Forecast.FeelsLike, RepeatChar(" ", boxWidth-19-feelsLikeLenght), w.Forecast.Min, RepeatChar(" ", boxWidth-12-minTemperatureLength), w.Forecast.Max, RepeatChar(" ", boxWidth-12-maxTemperatureLength))
+
+	pressureLenght := len(fmt.Sprintf("%d", w.Forecast.Pressure))
+	humidityLenght := len(fmt.Sprintf("%d", w.Forecast.Humidity))
+	fmt.Printf("┃ Pressure: %d hPa%s ┃\n┃ Humidity: %d%%%s ┃\n", w.Forecast.Pressure, RepeatChar(" ", boxWidth-18-pressureLenght), w.Forecast.Humidity, RepeatChar(" ", boxWidth-15-humidityLenght))
+
+	windLenght := len(fmt.Sprintf("%.2f", w.Wind.Speed))
+	degreesLenght := len(fmt.Sprintf("%.2f", w.Wind.Deg))
+	gustLenght := len(fmt.Sprintf("%.2f", w.Wind.Gust))
+	fmt.Printf("┃ Wind speed %.2fm/s%s ┃\n┃ Deg %.2f%s ┃\n┃ Gust %.2fm/s%s ┃\n", w.Wind.Speed, RepeatChar(" ", boxWidth-18-windLenght), w.Wind.Deg, RepeatChar(" ", boxWidth-8-degreesLenght), w.Wind.Gust, RepeatChar(" ", boxWidth-12-gustLenght))
+	fmt.Printf("┗%s┛\n\n", RepeatChar("━", boxWidth-2))
 }
