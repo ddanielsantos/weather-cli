@@ -2,6 +2,10 @@
 
 Simple CLI made with Go, it interacts with the OpenWeather's [Current API](https://openweathermap.org/current)
 
+## :arrow_forward: Demo:
+
+![](showcase.gif)
+
 ## :gear: Running locally:
 
 - Download
