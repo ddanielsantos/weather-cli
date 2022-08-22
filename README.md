@@ -4,7 +4,9 @@ Simple CLI made with Go, it interacts with the OpenWeather's [Current API](https
 
 ## :arrow_forward: Demo:
 
-![](showcase.gif)
+<p align="center">
+<img src="https://user-images.githubusercontent.com/80872981/186007139-52079c5b-02aa-42a5-a5cf-0df14dcd88fa.png"/>
+</p>
 
 ## :gear: Running locally:
 
